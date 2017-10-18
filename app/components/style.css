@@ -1,3 +1,43 @@
+* {
+  outline: 0;
+}
+html, body, #root {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: auto 150px;
+  grid-template-rows: auto 50px;
+  grid-template-areas:
+    "chat sidebar"
+    "input-text sidebar";
+}
+.chat {
+  display: grid;
+  grid-area: chat;
+  align-content: flex-start;
+}
+
+.sidebar {
+  display: grid;
+  grid-area: sidebar;
+  align-content: flex-start;
+  border: 1px solid lightgrey;
+}
+
+.chat-input-text {
+  display: grid;
+  grid-area: input-text;
+}
 .uma-class-aew {
-  border: 2px solid lightgrey;
+  border: 1px solid lightgrey;
+  border-right: none;
+  padding: 10px;
+  font-size: 24px;
+  line-height: 26px;
 }

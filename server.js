@@ -1,12 +1,16 @@
 const express = require('express');
 const path = require('path');
 const opn = require('opn');
+const uuidv4 = require('uuid/v4');
 
 const app = express()
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-const users = [];
+var users = [];
+var messages = [];
+
+var numberOfGuests = 0;
 
 app.use(express.static('public'))
 
@@ -15,10 +19,20 @@ app.get('/', function (req, res) {
 })
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  newUser = {
+    id: uuidv4(),
+    userName: 'guest' + ++numberOfGuests
+  }
+  users.push(newUser)
+  console.log(newUser)
+  socket.emit('initialState', { user: newUser, users: users, messages: messages });
+  socket.on("newMessage", (message) => {
+    message.id = uuidv4();
+    messages.push(message);
+    console.log(message)
+    socket.emit('newMessage', message)
   });
+  socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
 server.listen(3000, function (error) {
