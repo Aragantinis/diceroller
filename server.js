@@ -30,7 +30,7 @@ io.on('connection', function (socket) {
     message.id = uuidv4();
     messages.push(message);
     console.log(message)
-    socket.emit('newMessage', message)
+    io.sockets.emit('newMessage', message)
   });
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
